@@ -13,10 +13,10 @@
 
 void initialize(int[9][9][2] play_board, int[9][9][2] solved_board){
 	/*function description:
-	 * asks user for amount of hints, then generates a puzzle with that amount of hints
-	 * then sloves it, saving the boards by the reference given*/
-	/*Function variables:
-	 */
+	 * 1. asks user for amount of hints,
+	 * 2. generates a puzzle with that amount of hints
+	 * 3. sloves it, saving the boards at the references given*/
+	/*Function variables:*/
 	int hints_amount = 0;
 	/*-------------------*/
 	hints_amount = getHintsAmount();

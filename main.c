@@ -24,13 +24,13 @@ int parsed_command[4] =  {0}; /*[command,x,y,z] where '-1'-error, '1'-set, '2'-h
 int main(int argc, char *argv[]){
 	SP_BUFF_SET(); /*Windows buffer auto print flush*/
 	srand(atoi(argv[1])); /*randomizing by preset seed*/
-	fgets(user_command,1024,stdin);
-	printf("echo: %s",user_command);
-	/*Initialize(play_board,solved_board);*/
-	/*while TRUE*/
-		/*printGameBoard()*/
-		/*user_command = getUserCommand()*/
-		/*parsed_command = ParseCommand(userCommand)*/
-		/*execute(parsed_command,solved_baord,play_baord)*/
+	initialize(play_board,solved_board);/*generates new play board and solves it on the solved board*/
+	while (!full(play_board)){ /*1 round in game*/
+		printGameBoard(play_board);
+		user_command = "";
+		fgets(user_command,1024,stdin); /*get user command*/
+		parsed_command = ParseCommand(user_command);
+		execute(parsed_command,solved_board,play_board);
+	}
 	return(0);
 }

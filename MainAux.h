@@ -16,5 +16,8 @@ void resetBoard(int[9][9][2]);
 void clearUnfixed(int[9][9][2]);
 void fixNCells(int[9][9][2],int);
 int sum_array(int a[], int);
+int chooseRandomOption(int[],int);
+void findFirstZero(int[9][9][2], int[2]);
+void clearFromPos(int[9][9][2], int[2]);
 
 #endif /* MAINAUX_H_ */

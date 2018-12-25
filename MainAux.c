@@ -21,9 +21,11 @@ void printGameBoard(int game_board[9][9][2]){ /*<<<<<<<DONE>>>>>>>*/
 			if (x==1) {/*first line*/
 				printf("|");
 			}
-			if (game_board[x-1][y-1][1] == 1){
+			if (game_board[x-1][y-1][1] == 1){ /*1 -> fixed*/
 				printf(".%d",game_board[x-1][y-1][2]);
-			} else {
+			} else if (game_board[x-1][y-1][2] == 0){
+				printf("  ");
+			}else{
 				printf(" %d",game_board[x-1][y-1][2]);
 			}
 			if (x%9 == 0 && x>0){ /*end of line*/
@@ -56,9 +58,15 @@ int getHintsAmount(){ /*<<<<<<<DONE>>>>>>>>*/
 	return *hintsp;
 }
 
-void copyBoard(int* origin, int* target){
+void copyBoard(int origin[9][9][2], int target[9][9][2]){
 	/*function copies from origin board to the other copied target board*/
-	/*go over every cell*/
+	int x = 0;
+	int y = 0;
+	for (y=0;y<9;y++){
+		for (x=0;x<9;x++){
+			target[x][y][2] = origin[x][y][2];
+		}
+	}
 	/*put in every target cell <x,y> value from origin*/
 }
 
@@ -66,10 +74,10 @@ void resetBoard(int game_board[9][9][2]){
 	/*go over board, set to 0*/
 	int i = 0;
 	int j = 0;
-	for (;i<10;i++){
-		for (;j<10;j++){
-			game_board[i][j][0] = 0;
+	for (i=0;i<9;i++){
+		for (j=0;j<9;j++){
 			game_board[i][j][1] = 0;
+			game_board[i][j][2] = 0;
 		}
 	}
 }
@@ -82,12 +90,12 @@ int isLegalNumber(char* num){
 }
 
 void clearUnfixed(int play_board[9][9][2]){
-	int i = 0;
-	int j = 0;
-	for (;i<10;i++){
-		for (;j<10;j++){
-			if (play_board[i][j][0] == 0){
-				play_board[i][j][1] = 0;
+	int x = 0;
+	int y = 0;
+	for (y=0;y<9;y++){
+		for (x=0;x<9;x++){
+			if (play_board[x][y][1] == 0){
+				play_board[x][y][2] = 0;
 			}
 		}
 	}
@@ -95,7 +103,16 @@ void clearUnfixed(int play_board[9][9][2]){
 
 void fixNCells(int play_board[9][9][2],int n){
 	/*function description: randomize n times an <x,y> location, if it is un-fixed, fix it, update n to n-1 and continue until n=0*/
-
+	int x = -1;
+	int y = -1;
+	while (n > 0){ /*hints left*/
+		x = rand()%8+1;
+		y = rand()%8+1;
+		if (play_board[x][y][1] == 0){
+			n-=1;
+			play_board[x][y][1] = 1;
+		}
+	}
 }
 
 int sum_array(int a[], int num_elements){
@@ -105,4 +122,49 @@ int sum_array(int a[], int num_elements){
 	 sum = sum + a[i];
    }
    return(sum);
+}
+
+int chooseRandomOption(int options[],int length){
+	/*lnegth gets how size of options, e.g. {0,1,2} -> length = 3*/
+	/*if no options are available returns -1*/
+	int i = 0;
+	int random_option = -1;
+	if (sum_array(options,length) > 0){
+		random_option = (rand()%sum_array(options,length))+1;
+		for (i=0;i<length;i++){ /*go over options*/
+			if (options[i] == 1){ /*count valid option*/
+				random_option -= 1;
+			}
+			if (options[i] == 1 && random_option <= 0){ /*reached randomly chosen index*/
+				return i+1;
+			}
+		}
+	}
+	return -1;
+}
+
+void findFirstZero(int game_board[9][9][2], int pos[2]){
+	int x = 0;
+	int y = 0;
+	for (y=0;y<9;y++){
+		for(x=0;x<9;x++){
+			if (game_board[x][y][2] == 0){
+				pos[0] = x;
+				pos[1] = y;
+				return;
+			}
+		}
+	}
+}
+
+void clearFromPos(int game_board[9][9][2], int pos[2]){
+//	printf("clean called on x: %d, y: %d\n",pos[0],pos[1]);/*debug*/
+	int x = 0;
+	int y = 0;
+	for (y=pos[1];y<9;y++){
+		for(x=pos[0];x<9;x++){
+			game_board[x][y][2] = 0;
+		}
+	}
+//	printGameBoard(game_board); /*debug*/
 }

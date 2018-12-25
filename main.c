@@ -30,9 +30,10 @@ int main(int argc, char *argv[]){
 	SP_BUFF_SET(); /*Windows buffer auto print flush*/
 	srand(atoi(argv[1])); /*randomizing by preset seed*/
 	initialize(play_board,solved_board);/*generates new play board and solves it on the solved board*/
-	printGameBoard(play_board); /*debug*/
-	while (!isFull(play_board)){ /*1 round in game*/
+//	printGameBoard(play_board); /*debug*/
+	while (!isFull(play_board)){ /*1 round in game, puzzle isn't complete*/
 		printGameBoard(play_board);
+		printGameBoard(solved_board); /*debug*/
 		user_command = "";
 		fgets(user_command,1024,stdin); /*get user command*/
 		parseCommand(user_command, parsed_command);

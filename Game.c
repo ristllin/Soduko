@@ -7,12 +7,16 @@
 
 int isFull(int game_board[9][9][2]){
 	/*checks if a board is full of numbers*/
-	int full = 1;
-	/*for x*/
-	/*for y*/
-	/*if 1 > cell > 9*/
-	/*full = 0 and break*/
-	return full;
+	int x = 0;
+	int y = 0;
+	for ( y=0 ; y<9 ; y++ ){
+		for ( x=0 ; x<9 ; x++){
+			if (game_board[x][y][2] == 0){
+				return 0;
+			}
+		}
+	}
+	return 1;
 }
 
 void execute(int* parsed_command,int solved_board [9][9][2],int play_board [9][9][2]){

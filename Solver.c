@@ -12,10 +12,11 @@
 
 /*Modules:*/
 #include "MainAux.h"
+#include "Game.h"
 
 /*--------*/
 
-void legalOptions(int play_board[9][9][2], int x, int y, int options[9]){
+void legalOptions(int game_board[9][9][2], int x, int y, int options[9]){
 	/*function description: function gets a board and an <X,Y> location, returns the legal options for the location
 	 * in an array, in which each index represents the optional number. 0 -illegal, 1-optional*/
 	int i = 0;
@@ -25,98 +26,107 @@ void legalOptions(int play_board[9][9][2], int x, int y, int options[9]){
 	for (i=0;i<10;i++){
 		*p++ = 1;
 	}
-	for (i=0;i<10;i++){
-		num = play_board[i][y][2]; /*check x*/
+	for (i=0;i<9;i++){
+		num = game_board[i][y][2]; /*check x*/
 		if (num > 0 && num < 10){
+//			printf("from x: %d |",num); /*debug*/
 			options[num-1] = 0; /*mark the number as taken by marking matching index*/
 		}
-		num = play_board[x][i][2]; /*check y*/
+		num = game_board[x][i][2]; /*check y*/
 		if (num > 0 && num < 10){
+//			printf("from y: %d |",num); /*debug*/
 			options[num-1] = 0;
 		}
-		num = play_board[(((x)/3)*3)+(i%3)][(((y)/3)*3)+(i/3)][2]; {/*check box*/
+		num = game_board[(((x)/3)*3)+(i%3)][(((y)/3)*3)+(i/3)][2]; {/*check box*/
 		if (num > 0 && num < 10)
+//			printf("from box: %d |",num); /*debug*/
 			options[num-1] = 0;
 		}
 	}
+//	printf("\n"); /*debug*/
 }
 
-void solver(int play_board[9][9][2], int solved_board[9][9][2]){
+void solver(int game_board[9][9][2], int solved_board[9][9][2]){
 	/*calls solver and duplicates variables, to avoid alteration of original boards by solver*/
-	/*duplicate play_board*/
-	/*solver(dupe_play_board)*/
+	/*duplicate game_board*/
+	/*solver(dupe_game_board)*/
 	/*copy data from duplicated to solved*/
 }
 
 void recursiveSolver(int solved_board[9][9][2]){
 	/*function description:
 	 * function will alter both boards given, which should be taken into consideration*/
-	/*flag = true*/
-	/*for x*/
-		/*for y*/
-			/*calculate legal options*/
-			/*if 0 legal moves, terminate -> flag = false*/
-			/*else if solved full, terminate {some branch finished}*/
-			/*else, for legal options*/
-				/*duplicate solved_board*/
-				/*solver(duplicated board, original_solved_board)*/
-				/*free duplicate*/
-		/*if flag false, terminate*/
-	/*if flag, terminate*/
+
 }
 
-void randomizedBacktracking(int play_board[9][9][2]){
-	/*function description: for each cell, compute legal options and randomly chose one of them*/
-	/*if not full*/
-	/*if full return 1*/
-	/*for each cell*/
-	/*if cell == 0*/
-	/*check legal options*/
-	/*if none, return 0*/
-	/*for each legal option*/
-	/*set on board current option*/
-	/*if call self == 1*/
-	/*return 1*/
-
+int randomizedBacktracking(int game_board[9][9][2]){
+	/*function description: for each cell, compute legal options. then randomly and recursively chooses one of them and continues until board is full*/
 	int x = 0;
 	int y = 0;
+	int first_zero_pos[2] = {-1};
 	int i = 0;
+	int option = -1;
+	int options[9] = {1}; /*created locally in function scope for recursive uses*/
 	int options_amount = -1;
-	int options[9] = {1};
-	for (y=0;y < 9;y++){
+//	int debug = 0;
+	/*-------------------*/
+	if (isFull(game_board)){ /*some branch finished, the rest is irrelevant*/
+		return 1;
+	}
+
+	findFirstZero(game_board,first_zero_pos);
+	for (y=0;y < 9;y++){ /*for each cell*/
 		for (x=0;x < 9;x++){
-			printGameBoard(play_board); /*debug*/
-			legalOptions(play_board,x,y,options);
-			options_amount = (rand()%sum_array(options,9))+1;
-			printf("["); /*debug*/
-			for (i=0;i<9;i++){
-				printf("%d,",options[i]); /*debug*/
+			if (game_board[x][y][2] != 0){ /*if cell != 0, still in "built area"*/
+				continue;
 			}
-			printf("]\n");
-			for (i=0;i<9;i++){ /*go over options*/
-				if (options[i] == 1){ /*count valid option*/
-					options_amount -= 1;
+			legalOptions(game_board,x,y,options); /*check legal options*/
+			option = chooseRandomOption(options,9);
+			if (option == -1){ /*if no legal options left, return 0*/
+				clearFromPos(game_board,first_zero_pos);
+				return 0;
+			}
+			options_amount = sum_array(options,9);
+			for (i=0;i<options_amount;i++){
+				game_board[x][y][2] = option;
+				options[option-1] = 0; /*remove tested option from options*/
+//				printf("current option selected: %d\n",option); /*debug from here*/
+//				printf("options left: [");
+//				for (debug=0;debug<9;debug++){
+//					printf("%d,",options[debug]);
+//				}
+//				printf("]\nBoard with current selection\n:");
+//				printGameBoard(game_board); /*debug to here*/
+				if (isFull(game_board) || randomizedBacktracking(game_board)){ /*just filled the board or one of the branches did*/
+					return 1;
 				}
-				if (options[i] == 1 && options_amount <= 0){ /*reached randomly chosen index*/
-					play_board[x][y][2] = i+1;
-					printf("choose: %d\n",i+1);/*debug*/
-					break;
+				option = chooseRandomOption(options,9); /*set new option*/
+				if (option == -1){
+					clearFromPos(game_board,first_zero_pos);
+					return 0;
 				}
 			}
+			clearFromPos(game_board,first_zero_pos);
+			return 0;
 		}
 	}
+	return -1; /*function error*/
 }
 
-void puzzleGenerator(int play_board[9][9][2], int hints){
-	printf("de:PG:1\n"); /*debug*/
-	resetBoard(play_board);
-	printf("de:PG:2\n"); /*debug*/
-	randomizedBacktracking(play_board);
-	printf("de:PG:3\n"); /*debug*/
-	fixNCells(play_board,hints);
-	printf("de:PG:4\n"); /*debug*/
-	clearUnfixed(play_board);
-	printf("de:PG:5\n"); /*debug*/
+void puzzleGenerator(int game_board[9][9][2],int solved_board[9][9][2], int hints){
+	printf("reseting board\n"); /*debug*/
+	resetBoard(game_board);
+	resetBoard(solved_board);
+	printf("randomizing backtracking\n"); /*debug*/
+	randomizedBacktracking(solved_board);
+	copyBoard(solved_board,game_board);
+	printf("fixing cells\n"); /*debug*/
+	fixNCells(game_board,hints);
+	printGameBoard(game_board);
+	printf("clearing unfixed cells\n"); /*debug*/
+	clearUnfixed(game_board);
+	printGameBoard(game_board);
+	printf("puzzle generation complete\n"); /*debug*/
 }
 
 

@@ -30,6 +30,7 @@ int main(int argc, char *argv[]){
 	SP_BUFF_SET(); /*Windows buffer auto print flush*/
 	srand(atoi(argv[1])); /*randomizing by preset seed*/
 	initialize(play_board,solved_board);/*generates new play board and solves it on the solved board*/
+	printGameBoard(play_board); /*debug*/
 	while (!isFull(play_board)){ /*1 round in game*/
 		printGameBoard(play_board);
 		user_command = "";

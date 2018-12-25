@@ -6,6 +6,7 @@
  */
 
 /*Libraries:*/
+#include <stdio.h>
 
 /*Modules:*/
 #include "MainAux.h"
@@ -20,6 +21,9 @@ void initialize(int play_board[9][9][2], int solved_board[9][9][2]){
 	int hints_amount = 0;
 	/*-------------------*/
 	hints_amount = getHintsAmount();
+	printf("de:IN:1\n");/*debug*/
 	puzzleGenerator(play_board,hints_amount);
+	printf("de:IN:2\n");/*debug*/
 	solver(play_board,solved_board);
+	printf("de:IN:3\n");/*debug*/
 }

@@ -114,19 +114,12 @@ int randomizedBacktracking(int game_board[9][9][2]){
 }
 
 void puzzleGenerator(int game_board[9][9][2],int solved_board[9][9][2], int hints){
-	printf("reseting board\n"); /*debug*/
 	resetBoard(game_board);
 	resetBoard(solved_board);
-	printf("randomizing backtracking\n"); /*debug*/
 	randomizedBacktracking(solved_board);
 	copyBoard(solved_board,game_board);
-	printf("fixing cells\n"); /*debug*/
 	fixNCells(game_board,hints);
-	printGameBoard(game_board);
-	printf("clearing unfixed cells\n"); /*debug*/
 	clearUnfixed(game_board);
-	printGameBoard(game_board);
-	printf("puzzle generation complete\n"); /*debug*/
 }
 
 

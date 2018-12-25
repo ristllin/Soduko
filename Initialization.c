@@ -8,10 +8,10 @@
 /*Libraries:*/
 
 /*Modules:*/
-#include "MainAux.h";
-#include "Solver.h";
+#include "MainAux.h"
+#include "Solver.h"
 
-void initialize(int[9][9][2] play_board, int[9][9][2] solved_board){
+void initialize(int* play_board, int* solved_board){
 	/*function description:
 	 * 1. asks user for amount of hints,
 	 * 2. generates a puzzle with that amount of hints

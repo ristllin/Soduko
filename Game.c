@@ -5,7 +5,7 @@
  *      Author: Roy Darnell
  */
 
-int full(int game_board [9][9][2]){
+int isFull(int* game_board){
 	/*checks if a board is full of numbers*/
 	int full = 1;
 	/*for x*/
@@ -15,7 +15,7 @@ int full(int game_board [9][9][2]){
 	return full;
 }
 
-void execute(int parsed_command[4],int solved_board[9][9][2],int play_board[9][9][2]){
+void execute(int parsed_command[4],int* solved_board,int* play_board){
 	int command = parsed_command[0]; /*[command,x,y,z] where '-1'-error, '1'-set, '2'-hint, '3'-validate, '4'-restart, '5'-exit*/
 	switch(command){
 	case -1:
@@ -41,4 +41,20 @@ void execute(int parsed_command[4],int solved_board[9][9][2],int play_board[9][9
 		/*exit*/
 		break;
 	}
+}
+
+void set(int* play_board,int x,int y,int z){
+
+}
+
+void hint(int* solved_board,int x,int y){
+
+}
+
+void validate(int* solved_board,int* play_board){
+
+}
+
+void restart(int* solved_board,int* play_board){
+
 }

@@ -12,15 +12,9 @@ void printGameBoard(int* game_board){
 }
 
 int getHintsAmount(){
-	int hints;
+	int hints = -1;
 	/*get hints from user - use scanf, assumes correct input*/
 	return hints;
-}
-
-int* duplicateBoard(int* game_board){
-	int result [9][9][2];
-	/*go over board, copy to new board*/
-	return &(result[0]);
 }
 
 void copyBoard(int* origin, int* target){
@@ -34,6 +28,8 @@ void resetBoard(int* game_board){
 }
 
 int isLegalNumber(char* num){
+	int result = -1;
 	/*function definition:
 	 * 1. gets string, if it is a legal number (1-9), cast it and return it, otherwise returns -1*/
+	return result;
 }

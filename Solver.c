@@ -8,7 +8,7 @@
 /*Libraries:*/
 
 /*Modules:*/
-#include "MainAux.h";
+#include "MainAux.h"
 
 /*--------*/
 
@@ -42,12 +42,11 @@ void puzzleGenerator(int* play_board, int hints){
 
 }
 
-int* legalOptions(int* play_board, int x, int y){
+void legalOptions(int* play_board, int x, int y, int* options){
 	/*function description: function gets a board and an <X,Y> location, returns the legal options for the location
 	 * in an array, in which each index represents the optional number. 0 -illegal, 1-optional*/
 	/*int results[9];*/
 	/*check x*/
 	/*check y*/
 	/*check square*/
-	return &(results[0]);
 }

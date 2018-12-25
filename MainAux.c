@@ -7,7 +7,7 @@
 
 /*Libraries:*/
 
-void printGameBoard(int* game_board){
+void printGameBoard(int game_board[9][9][2]){
 	/*print board, see reference*/
 }
 
@@ -23,7 +23,7 @@ void copyBoard(int* origin, int* target){
 	/*put in every target cell <x,y> value from origin*/
 }
 
-void resetBoard(int* game_board){
+void resetBoard(int game_board[9][9][2]){
 	/*go over board, set to 0*/
 }
 

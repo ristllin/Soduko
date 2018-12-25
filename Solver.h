@@ -8,9 +8,9 @@
 #ifndef SOLVER_H_
 #define SOLVER_H_
 
-void legalOptions(int*,int,int,int*);
-void puzzleGenerator(int*,int);
-void recursiveSolver(int*);
-void Solver(int*,int*);
+void legalOptions(int[9][9][2],int,int,int*);
+void puzzleGenerator(int[9][9][2],int);
+void recursiveSolver(int[9][9][2]);
+void solver(int[9][9][2],int[9][9][2]);
 
 #endif /* SOLVER_H_ */

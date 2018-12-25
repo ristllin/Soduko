@@ -13,14 +13,14 @@
 /*--------*/
 
 
-void solver(int* play_board, int* solved_board){
+void solver(int play_board[9][9][2], int solved_board[9][9][2]){
 	/*calls solver and duplicates variables, to avoid alteration of original boards by solver*/
 	/*duplicate play_board*/
 	/*solver(dupe_play_board)*/
 	/*copy data from duplicated to solved*/
 }
 
-void recursiveSolver(int* solved_board){
+void recursiveSolver(int solved_board[9][9][2]){
 	/*function description:
 	 * function will alter both boards given, which should be taken into consideration*/
 	/*flag = true*/
@@ -37,7 +37,7 @@ void recursiveSolver(int* solved_board){
 	/*if flag, terminate*/
 }
 
-void puzzleGenerator(int* play_board, int hints){
+void puzzleGenerator(int play_board[9][9][2], int hints){
 	resetBoard(play_board);
 
 }

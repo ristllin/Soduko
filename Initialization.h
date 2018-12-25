@@ -8,6 +8,6 @@
 #ifndef INITIALIZATION_H_
 #define INITIALIZATION_H_
 
-void initialize(int*,int*);
+void initialize(int[9][9][2],int[9][9][2]);
 
 #endif /* INITIALIZATION_H_ */

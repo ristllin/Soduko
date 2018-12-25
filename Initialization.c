@@ -11,7 +11,7 @@
 #include "MainAux.h"
 #include "Solver.h"
 
-void initialize(int* play_board, int* solved_board){
+void initialize(int play_board[9][9][2], int solved_board[9][9][2]){
 	/*function description:
 	 * 1. asks user for amount of hints,
 	 * 2. generates a puzzle with that amount of hints

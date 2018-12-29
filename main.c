@@ -23,6 +23,7 @@
 int game_status = 0; /*0=initialization, 1= Game on 2=Game over*/
 int solved_board[9][9][2] = {0}; /*initialized to an empty soduko borad, each cell is a tuple (fixed/not-fixed,value)*/
 int play_board[9][9][2] = {0};
+char empty[1] = " ";
 char* user_command;
 int parsed_command[4] =  {0}; /*[command,x,y,z] where '-1'-error, '1'-set, '2'-hint, '3'-validate, '4'-restart, '5'-exit*/
 
@@ -32,9 +33,17 @@ int main(int argc, char *argv[]){
 	initialize(play_board,solved_board);/*generates new play board and solves it on the solved board*/
 	while (!isFull(play_board)){ /*1 round in game, puzzle isn't complete*/
 		printGameBoard(play_board);
-		user_command = "";
-		fgets(user_command,1024,stdin); /*get user command*/ /*<<<<crashes>>>>*/
+		user_command = empty;
+		printf("enter command:"); /*debug*/
+		getchar();
+		gets(user_command);
+		printf("\n");
 		parseCommand(user_command, parsed_command);
+		printf("command: %d,",parsed_command[1]);
+		printf("%d,",parsed_command[2]);
+		printf("%d,",parsed_command[3]);
+		printf("%d\n",parsed_command[4]);
+		exit(3); /*debug*/
 		execute(parsed_command,solved_board,play_board);
 	}
 	return(0);

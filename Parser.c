@@ -59,6 +59,7 @@ void parseCommand(char* userInput, int parsed_command[4]){
 	int command = -1;
 	parsed_command[1] = -1; parsed_command[2] = -1; parsed_command[3] = -1; parsed_command[4] = -1;/*reset*/
 	char set[4] = "set\0", hint[5] = "hint\0", validate[9] = "validate\0", restart[8] = "restart\0", exit[5] = "exit\0";
+//	printf("parseCommand got: %s\n",userInput);
 	while (*userInput != '\0' && *userInput == ' '){++*userInput;} /*clean white spaces*/
 	while (*userInput != '\0'){ /*until string finished, white spaces deleted after each variable*/
 		if (i > 4){return;} /*count variables, extra variables aren't interesting*/
@@ -83,6 +84,7 @@ void parseCommand(char* userInput, int parsed_command[4]){
 			while (*userInput != '\0' && *userInput != ' '){++userInput;} /*get to next variable*/
 		} else { /*parse number*/
 			command = parseInt(userInput);
+//			printf("parsed num is:%d\n",command);
 			while (*userInput != '\0' && *userInput != ' '){++userInput;} /*until number finished*/
 		}
 		parsed_command[i] = command;

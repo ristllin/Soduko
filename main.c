@@ -31,19 +31,17 @@ int main(int argc, char *argv[]){
 	SP_BUFF_SET(); /*Windows buffer auto print flush*/
 	srand(atoi(argv[1])); /*randomizing by preset seed*/
 	initialize(play_board,solved_board);/*generates new play board and solves it on the solved board*/
+	getchar();
 	while (!isFull(play_board)){ /*1 round in game, puzzle isn't complete*/
 		printGameBoard(play_board);
 		user_command = empty;
 		printf("enter command:"); /*debug*/
-		getchar();
 		gets(user_command);
-		printf("\n");
 		parseCommand(user_command, parsed_command);
 		printf("command: %d,",parsed_command[1]);
 		printf("%d,",parsed_command[2]);
 		printf("%d,",parsed_command[3]);
 		printf("%d\n",parsed_command[4]);
-		exit(3); /*debug*/
 		execute(parsed_command,solved_board,play_board);
 	}
 	return(0);

@@ -82,35 +82,28 @@ void resetBoard(int game_board[9][9][2]){
 	}
 }
 
-int isLegalNumber(char* num){
-	int result = -1;
-	/*function definition:
-	 * 1. gets string, if it is a legal number (1-9), cast it and return it, otherwise returns -1*/
-	return result;
-}
-
-void clearUnfixed(int play_board[9][9][2]){
+void clearUnfixed(int game_board[9][9][2]){
 	int x = 0;
 	int y = 0;
 	for (y=0;y<9;y++){
 		for (x=0;x<9;x++){
-			if (play_board[x][y][1] == 0){
-				play_board[x][y][2] = 0;
+			if (game_board[x][y][1] == 0){
+				game_board[x][y][2] = 0;
 			}
 		}
 	}
 }
 
-void fixNCells(int play_board[9][9][2],int n){
+void fixNCells(int game_board[9][9][2],int n){
 	/*function description: randomize n times an <x,y> location, if it is un-fixed, fix it, update n to n-1 and continue until n=0*/
 	int x = -1;
 	int y = -1;
 	while (n > 0){ /*hints left*/
-		x = rand()%8+1;
-		y = rand()%8+1;
-		if (play_board[x][y][1] == 0){
+		x = rand()%9;
+		y = rand()%9;
+		if (game_board[x][y][1] == 0){
 			n-=1;
-			play_board[x][y][1] = 1;
+			game_board[x][y][1] = 1;
 		}
 	}
 }

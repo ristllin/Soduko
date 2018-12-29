@@ -85,8 +85,8 @@ void set(int parsed_command[4], int game_board[9][9][2]){
 	int debug = 0;
 	printf("executing set\n");
 	if (legalInput(parsed_command,4)){
-		if (game_board [9][9][1] == 1){ /*is fixed*/
-				printf("Error: cell is fixed");
+		if (game_board [x][y][1] == 1){ /*is fixed*/
+				printf("Error: cell is fixed\n");
 			}
 		else{
 			legalOptions(game_board,x,y,options);

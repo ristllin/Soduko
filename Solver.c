@@ -58,6 +58,7 @@ void solver(int game_board[9][9][2], int solved_board[9][9][2]){
 	} else {
 		printf("Validation failed: board is unsolvable\n");
 	}
+	printGameBoard(solved_board);/*debug*/
 }
 
 int recursiveSolver(int solved_board[9][9][2]){
@@ -70,7 +71,7 @@ int recursiveSolver(int solved_board[9][9][2]){
 	int option = -1;
 	int options[9] = {1}; /*created locally in function scope for recursive uses*/
 	int options_amount = -1;
-	int debug = 0;
+//	int debug = 0;
 	/*-------------------*/
 	if (isFull(solved_board)){ /*some branch finished, the rest is irrelevant*/
 		return 1;
@@ -92,13 +93,13 @@ int recursiveSolver(int solved_board[9][9][2]){
 			for (i=0;i<options_amount;i++){
 				solved_board[x][y][2] = option;
 				options[option-1] = 0; /*remove tested option from options*/
-				printf("current option selected: %d\n",option); /*debug from here*/
-				printf("options left: [");
-				for (debug=0;debug<9;debug++){
-					printf("%d,",options[debug]);
-				}
-				printf("]\nBoard with current selection\n:");
-				printGameBoard(solved_board); /*debug to here*/
+//				printf("current option selected: %d\n",option); /*debug from here*/
+//				printf("options left: [");
+//				for (debug=0;debug<9;debug++){
+//					printf("%d,",options[debug]);
+//				}
+//				printf("]\nBoard with current selection\n:");
+//				printGameBoard(solved_board); /*debug to here*/
 				if (isFull(solved_board) || recursiveSolver(solved_board)){ /*just filled the board or one of the branches did*/
 					return 1;
 				}

@@ -118,7 +118,7 @@ int sum_array(int a[], int num_elements){
 }
 
 int chooseRandomOption(int options[],int length){
-	/*lnegth gets how size of options, e.g. {0,1,2} -> length = 3*/
+	/*length gets the size of options, e.g. {0,1,2} -> length = 3*/
 	/*if no options are available returns -1*/
 	int i = 0;
 	int random_option = -1;
@@ -134,6 +134,20 @@ int chooseRandomOption(int options[],int length){
 		}
 	}
 	return -1;
+}
+
+int chooseNextOption(int options[],int length){
+	/*length gets the size of options, e.g. {0,1,2} -> length = 3*/
+	/*if no options are available returns -1*/
+	int i = 0;
+	if (sum_array(options,length) > 0){
+		for (i=0;i<length;i++){ /*go over options*/
+			if (options[i] == 1){ /*reached first option*/
+				return i+1;/*returns option index+1*/
+			}
+		}
+	}
+	return -1; //no options were found
 }
 
 void findFirstZero(int game_board[9][9][2], int pos[2]){

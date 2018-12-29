@@ -7,11 +7,16 @@
 
 /*Libraries:*/
 #include <stdio.h>
+#include <stdlib.h>
 /*Modules:*/
 #include "Solver.h"
+#include "Initialization.h"
+#include "MainAux.h"
 
 /*functions:*/
 void set(int[4],int[9][9][2]);
+void hint(int [4], int[9][9][2]);
+void validate(int[9][9][2], int[9][9][2]);
 
 static const char INVALID[] = "Error: invalid command\n";
 
@@ -41,7 +46,6 @@ int legalInput(int parsed_command[4],int amount_of_variants){
 
 void execute(int parsed_command[4],int solved_board [9][9][2],int game_board [9][9][2]){
 	int command = parsed_command[1]; /*[command,x,y,z] where '-1'-error, '1'-set, '2'-hint, '3'-validate, '4'-restart, '5'-exit*/
-	int i = 0;
 	switch(command){
 	case -1:
 		/*invalid option*/
@@ -54,23 +58,20 @@ void execute(int parsed_command[4],int solved_board [9][9][2],int game_board [9]
 	case 2:
 		/*hint*/
 		/*check legality of vars*/
-		for (i=1;i<5;i++){
-			if (parsed_command[i] == -1){
-				printf("%s",INVALID);
-				break;
-			}
-		}
+		hint(parsed_command,solved_board);
 		/*go to slved_baord at location <X,Y> and print Z*/
 		break;
 	case 3:
 		/*validate*/
-
+		validate(solved_board,game_board);
 		break;
 	case 4:
-		/*restart*/
+		printf("executing restart\n");
+		initialize(game_board,solved_board);
 		break;
 	case 5:
-		/*exit*/
+		printf("Exiting...\n");
+		exit(1);
 		break;
 	}
 }
@@ -105,14 +106,16 @@ void set(int parsed_command[4], int game_board[9][9][2]){
 	}
 }
 
-void hint(int solved_board[9][9][2], int x, int y){
-	printf("executing hint\n");
+void hint(int parsed_command[4],int solved_board[9][9][2]){
+	int x = parsed_command[2]-1;
+	int y = parsed_command[3]-1;
+	printGameBoard(solved_board);/*debug*/
+	printf("executing hint with x:%d,y:%d\n",x,y);/*debug*/
+	printf("Hint: set cell to %d\n",solved_board[x][y][2]);
 }
 
 void validate(int solved_board[9][9][2], int game_board[9][9][2]){
 	printf("executing validate\n");
-}
-
-void restart(int solved_board[9][9][2], int game_board[9][9][2]){
-	printf("executing restart\n");
+	resetBoard(solved_board);
+	solver(game_board,solved_board);
 }

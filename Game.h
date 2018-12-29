@@ -9,7 +9,7 @@
 #define GAME_H_
 
 void execute(int[],int[9][9][2],int[9][9][2]);
-void hint(int*,int,int);
+void hint(int[9][9][2],int,int);
 int isFull(int[9][9][2]);
 void restart(int[9][9][2],int[9][9][2]);
 void set(int[9][9][2],int,int,int);

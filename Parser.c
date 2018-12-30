@@ -38,11 +38,12 @@ int compareInput(char* user_input, char command[]){
 		length++;
 		++p1;
 	}
-	if (strlen(command) != length){ /*check lengths match*/
+	if ((int)strlen(command) != length){ /*check lengths match*/
 		return 0;
 	}
 	p1 = user_input;
 	for (i =0;i<length;i++){ /*check content matches*/
+		/*printf("<%c> and <%c>",*p1,command[i]);*/
 		if (*p1 != command[i]){
 			return 0;
 		}
@@ -55,8 +56,8 @@ void parseCommand(char* userInput, int parsed_command[4]){
 	/*function description: gets string, returns int array [command,x,y,z] where '-1'-error, '1'-set, '2'-hint, '3'-validate, '4'-restart, '5'-exit, and x\y\z are ints*/
 	int i = 1;
 	int command = -1;
+	char set[4] = "set\0"; char hint[5] = "hint\0"; char validate[9] = "validate\0";char restart[8] = "restart\0";char exit[5] = "exit\0";
 	parsed_command[1] = -1; parsed_command[2] = -1; parsed_command[3] = -1; parsed_command[4] = -1;/*reset*/
-	char set[4] = "set\0", hint[5] = "hint\0", validate[9] = "validate\0", restart[8] = "restart\0", exit[5] = "exit\0";
 	while (*userInput != '\0' && *userInput == ' '){++*userInput;} /*clean white spaces*/
 	while (*userInput != '\0'){ /*until string finished, white spaces deleted after each variable*/
 		if (i > 4){return;} /*count variables, extra variables aren't interesting*/

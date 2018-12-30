@@ -12,10 +12,9 @@
 
 /*Modules:*/
 #include "MainAux.h"
-#include "Game.h"
 
 /*--------*/
-int recursiveSolver(int[9][9][2]);
+/*int recursiveSolver(int[9][9][2]);*/
 
 
 void legalOptions(int game_board[9][9][2], int x, int y, int options[9]){
@@ -40,16 +39,6 @@ void legalOptions(int game_board[9][9][2], int x, int y, int options[9]){
 		if (num > 0 && num < 10)
 			options[num-1] = 0;
 		}
-	}
-}
-
-void solver(int game_board[9][9][2], int solved_board[9][9][2]){
-	/*Function description: calls solver and duplicates variables, to avoid alteration of original boards by solver*/
-	copyBoard(game_board,solved_board);
-	if (recursiveSolver(solved_board)){
-		printf("Validation passed: board is solvable\n");
-	} else {
-		printf("Validation failed: board is unsolvable\n");
 	}
 }
 
@@ -97,7 +86,16 @@ int recursiveSolver(int solved_board[9][9][2]){
 		}
 	}
 	return -1; /*function error*/
+}
 
+void solver(int game_board[9][9][2], int solved_board[9][9][2]){
+	/*Function description: calls solver and duplicates variables, to avoid alteration of original boards by solver*/
+	copyBoard(game_board,solved_board);
+	if (recursiveSolver(solved_board)){
+		printf("Validation passed: board is solvable\n");
+	} else {
+		printf("Validation failed: board is unsolvable\n");
+	}
 }
 
 int randomizedBacktracking(int game_board[9][9][2]){
@@ -153,7 +151,3 @@ void puzzleGenerator(int game_board[9][9][2],int solved_board[9][9][2], int hint
 	fixNCells(game_board,hints);
 	clearUnfixed(game_board);
 }
-
-
-
-

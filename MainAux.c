@@ -147,7 +147,7 @@ int chooseNextOption(int options[],int length){
 			}
 		}
 	}
-	return -1; //no options were found
+	return -1; /*no options were found*/
 }
 
 void findFirstZero(int game_board[9][9][2], int pos[2]){
@@ -173,4 +173,18 @@ void clearFromPos(int game_board[9][9][2], int pos[2]){
 			game_board[x][y][2] = 0;
 		}
 	}
+}
+
+int isFull(int game_board[9][9][2]){
+	/*function description: checks if a board is full of numbers, 0 counts as empty*/
+	int x = 0;
+	int y = 0;
+	for ( y=0 ; y<9 ; y++ ){
+		for ( x=0 ; x<9 ; x++){
+			if (game_board[x][y][2] == 0){
+				return 0;
+			}
+		}
+	}
+	return 1;
 }

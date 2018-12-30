@@ -45,7 +45,6 @@ int main(int argc, char *argv[]){
 		    *pos = '\0';
 		}
 		parseCommand(user_command, parsed_command);
-		printf("user_command in main: [%d,%d,%d,%d]\n",parsed_command[1],parsed_command[2],parsed_command[3],parsed_command[4]); /*debug*/
 		execute(parsed_command,solved_board,play_board,show_flag);
 	}
 	return(0);

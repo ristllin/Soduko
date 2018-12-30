@@ -17,7 +17,7 @@ int parseInt(char *userInput){
 	int result = 0;
 	char *p = userInput;
 	int length = 0;
-	while(*p != ' ' && *p != '\0'){ /*check var length and validity in user input, with a different pointer*/
+	while(*p != ' ' && *p != '\0' && *p != '\t'){ /*check var length and validity in user input, with a different pointer*/
 		if (*p > '9' || *p < '0'){ /*illegal number*/
 			return -1;
 		}
@@ -34,7 +34,7 @@ int compareInput(char* user_input, char command[]){
 	int i = 0;
 	char* p1;
 	p1 = user_input;
-	while(*p1 != ' ' && *p1 != '\0'){ /*check var size in user input, with a different pointer*/
+	while(*p1 != ' ' && *p1 != '\0' && *p1 != '\t'){ /*check var size in user input, with a different pointer*/
 		length++;
 		++p1;
 	}
@@ -43,7 +43,6 @@ int compareInput(char* user_input, char command[]){
 	}
 	p1 = user_input;
 	for (i =0;i<length;i++){ /*check content matches*/
-		/*printf("<%c> and <%c>",*p1,command[i]);*/
 		if (*p1 != command[i]){
 			return 0;
 		}
@@ -58,7 +57,8 @@ void parseCommand(char* userInput, int parsed_command[4]){
 	int command = -1;
 	char set[4] = "set\0"; char hint[5] = "hint\0"; char validate[9] = "validate\0";char restart[8] = "restart\0";char exit[5] = "exit\0";
 	parsed_command[1] = -1; parsed_command[2] = -1; parsed_command[3] = -1; parsed_command[4] = -1;/*reset*/
-	while (*userInput != '\0' && *userInput == ' '){++*userInput;} /*clean white spaces*/
+	while (*userInput != '\0' && (*userInput == ' ' || *userInput == '\t')){++userInput;} /*clean white spaces and tabs*/
+	printf("userinput: <%s>\n",userInput);
 	while (*userInput != '\0'){ /*until string finished, white spaces deleted after each variable*/
 		if (i > 4){return;} /*count variables, extra variables aren't interesting*/
 		if (i == 1){ /*parse commands*/
@@ -76,14 +76,15 @@ void parseCommand(char* userInput, int parsed_command[4]){
 				command = -1; /*invalid option*/
 				return;
 			}
-			while (*userInput != '\0' && *userInput != ' '){++userInput;} /*get to next variable*/
+			while (*userInput != '\0' && *userInput != ' ' && *userInput != '\t'){++userInput;} /*get to next variable*/
 		} else { /*parse number*/
 			command = parseInt(userInput);
-			while (*userInput != '\0' && *userInput != ' '){++userInput;} /*until number finished*/
+			while (*userInput != '\0' && *userInput != ' ' && *userInput != '\t'){++userInput;} /*until number finished*/
 		}
+		printf("parsed_command[%d] is getting: %d\n",i,command);
 		parsed_command[i] = command;
-		if (*userInput == ' '){ /*clean white spaces and count +1*/
-			while (*userInput == ' '){++userInput;}
+		if (*userInput == ' ' || *userInput == '\t'){ /*clean white spaces and count +1*/
+			while (*userInput == ' ' || *userInput == '\t'){++userInput;}
 		}
 		i++;
 	}

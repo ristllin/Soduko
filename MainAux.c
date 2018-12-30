@@ -11,8 +11,8 @@
 
 
 /*Functions:*/
-void printGameBoard(int game_board[9][9][2]){ /*<<<<<<<DONE>>>>>>>*/
-	/*print board*/
+void printGameBoard(int game_board[9][9][2]){
+	/*function description: prints board*/
 	int x = 0;
 	int y = 0;
 	printf("----------------------------------\n");
@@ -40,10 +40,10 @@ void printGameBoard(int game_board[9][9][2]){ /*<<<<<<<DONE>>>>>>>*/
 	}
 }
 
-int getHintsAmount(){ /*<<<<<<<DONE>>>>>>>>*/
+int getHintsAmount(){
+	/*get hints from user - use scanf, assumes correct input*/
 	int hints = -1;
 	int* hintsp = &hints;
-	/*get hints from user - use scanf, assumes correct input*/
 	while (*hintsp == -1){ /*illegal input, error and retry*/
 		printf("Please enter the number of cells to fill [0-80]:\n");
 		if (scanf("%d",hintsp) == EOF){
@@ -59,19 +59,18 @@ int getHintsAmount(){ /*<<<<<<<DONE>>>>>>>>*/
 }
 
 void copyBoard(int origin[9][9][2], int target[9][9][2]){
-	/*function copies from origin board to the other copied target board*/
+	/*Function description: copies from origin board to the other copied target board*/
 	int x = 0;
 	int y = 0;
 	for (y=0;y<9;y++){
 		for (x=0;x<9;x++){
-			target[x][y][2] = origin[x][y][2];
+			target[x][y][2] = origin[x][y][2]; /*put in every target cell <x,y> value from origin*/
 		}
 	}
-	/*put in every target cell <x,y> value from origin*/
 }
 
 void resetBoard(int game_board[9][9][2]){
-	/*go over board, set to 0*/
+	/*Function description: go over whole board, set to 0, value and fixed mode*/
 	int i = 0;
 	int j = 0;
 	for (i=0;i<9;i++){
@@ -83,6 +82,7 @@ void resetBoard(int game_board[9][9][2]){
 }
 
 void clearUnfixed(int game_board[9][9][2]){
+	/*clears board from numbers that aren't set in the fixed field*/
 	int x = 0;
 	int y = 0;
 	for (y=0;y<9;y++){
@@ -95,7 +95,7 @@ void clearUnfixed(int game_board[9][9][2]){
 }
 
 void fixNCells(int game_board[9][9][2],int n){
-	/*function description: randomize n times an <x,y> location, if it is un-fixed, fix it, update n to n-1 and continue until n=0*/
+	/*Function description: randomize n times an <x,y> location, if it is un-fixed, fix it, update n to n-1 and continue until n=0*/
 	int x = -1;
 	int y = -1;
 	while (n > 0){ /*hints left*/
@@ -165,7 +165,7 @@ void findFirstZero(int game_board[9][9][2], int pos[2]){
 }
 
 void clearFromPos(int game_board[9][9][2], int pos[2]){
-//	printf("clean called on x: %d, y: %d\n",pos[0],pos[1]);/*debug*/
+	/*Function description, clears board from the x,y point onwards*/
 	int x = 0;
 	int y = 0;
 	for (y=pos[1];y<9;y++){
@@ -173,5 +173,4 @@ void clearFromPos(int game_board[9][9][2], int pos[2]){
 			game_board[x][y][2] = 0;
 		}
 	}
-//	printGameBoard(game_board); /*debug*/
 }

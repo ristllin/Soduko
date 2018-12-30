@@ -24,46 +24,38 @@ void legalOptions(int game_board[9][9][2], int x, int y, int options[9]){
 	int i = 0;
 	int num = 0;
 	int *p = options;
-	/*reset options*/
-	for (i=0;i<10;i++){
+	for (i=0;i<10;i++){ /*reset var options*/
 		*p++ = 1;
 	}
 	for (i=0;i<9;i++){
 		num = game_board[i][y][2]; /*check x*/
 		if (num > 0 && num < 10){
-//			printf("from x: %d |",num); /*debug*/
 			options[num-1] = 0; /*mark the number as taken by marking matching index*/
 		}
 		num = game_board[x][i][2]; /*check y*/
 		if (num > 0 && num < 10){
-//			printf("from y: %d |",num); /*debug*/
 			options[num-1] = 0;
 		}
 		num = game_board[(((x)/3)*3)+(i%3)][(((y)/3)*3)+(i/3)][2]; {/*check box*/
 		if (num > 0 && num < 10)
-//			printf("from box: %d |",num); /*debug*/
 			options[num-1] = 0;
 		}
 	}
-//	printf("\n"); /*debug*/
 }
 
 void solver(int game_board[9][9][2], int solved_board[9][9][2]){
 	/*Function description: calls solver and duplicates variables, to avoid alteration of original boards by solver*/
-	/*duplicate game_board*/
 	copyBoard(game_board,solved_board);
-	/*solver(dupe_game_board)*/
 	if (recursiveSolver(solved_board)){
 		printf("Validation passed: board is solvable\n");
 	} else {
 		printf("Validation failed: board is unsolvable\n");
 	}
-	printGameBoard(solved_board);/*debug*/
 }
 
 int recursiveSolver(int solved_board[9][9][2]){
-	/*function description:
-	 * function will alter both boards given, which should be taken into consideration upon func call*/
+	/*function description: function will alter both boards given, which should be taken into consideration upon func call*/
+	/*for every cell, for every legal option, call self with 1 of the options, and accept if the board is full, reject if no options are available*/
 	int x = 0;
 	int y = 0;
 	int first_zero_pos[2] = {-1};
@@ -71,13 +63,11 @@ int recursiveSolver(int solved_board[9][9][2]){
 	int option = -1;
 	int options[9] = {1}; /*created locally in function scope for recursive uses*/
 	int options_amount = -1;
-//	int debug = 0;
 	/*-------------------*/
 	if (isFull(solved_board)){ /*some branch finished, the rest is irrelevant*/
 		return 1;
 	}
-
-	findFirstZero(solved_board,first_zero_pos); /*if solution failed, can go back to this cell*/
+	findFirstZero(solved_board,first_zero_pos); /*if solution failed, try another opion, clean all cells after this cell from last use*/
 	for (y=0;y < 9;y++){ /*for each cell*/
 		for (x=0;x < 9;x++){
 			if (solved_board[x][y][2] != 0){ /*if cell != 0, still in "built area"*/
@@ -93,13 +83,6 @@ int recursiveSolver(int solved_board[9][9][2]){
 			for (i=0;i<options_amount;i++){
 				solved_board[x][y][2] = option;
 				options[option-1] = 0; /*remove tested option from options*/
-//				printf("current option selected: %d\n",option); /*debug from here*/
-//				printf("options left: [");
-//				for (debug=0;debug<9;debug++){
-//					printf("%d,",options[debug]);
-//				}
-//				printf("]\nBoard with current selection\n:");
-//				printGameBoard(solved_board); /*debug to here*/
 				if (isFull(solved_board) || recursiveSolver(solved_board)){ /*just filled the board or one of the branches did*/
 					return 1;
 				}
@@ -126,12 +109,10 @@ int randomizedBacktracking(int game_board[9][9][2]){
 	int option = -1;
 	int options[9] = {1}; /*created locally in function scope for recursive uses*/
 	int options_amount = -1;
-//	int debug = 0;
 	/*-------------------*/
 	if (isFull(game_board)){ /*some branch finished, the rest is irrelevant*/
 		return 1;
 	}
-
 	findFirstZero(game_board,first_zero_pos);
 	for (y=0;y < 9;y++){ /*for each cell*/
 		for (x=0;x < 9;x++){
@@ -148,13 +129,6 @@ int randomizedBacktracking(int game_board[9][9][2]){
 			for (i=0;i<options_amount;i++){
 				game_board[x][y][2] = option;
 				options[option-1] = 0; /*remove tested option from options*/
-//				printf("current option selected: %d\n",option); /*debug from here*/
-//				printf("options left: [");
-//				for (debug=0;debug<9;debug++){
-//					printf("%d,",options[debug]);
-//				}
-//				printf("]\nBoard with current selection\n:");
-//				printGameBoard(game_board); /*debug to here*/
 				if (isFull(game_board) || randomizedBacktracking(game_board)){ /*just filled the board or one of the branches did*/
 					return 1;
 				}

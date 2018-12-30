@@ -22,16 +22,16 @@ void printGameBoard(int game_board[9][9][2]){
 				printf("|");
 			}
 			if (game_board[x-1][y-1][1] == 1){ /*1 -> fixed*/
-				printf(".%d",game_board[x-1][y-1][2]);
+				printf(" .%d",game_board[x-1][y-1][2]);
 			} else if (game_board[x-1][y-1][2] == 0){
-				printf("  ");
+				printf("   ");
 			}else{
-				printf(" %d",game_board[x-1][y-1][2]);
+				printf("  %d",game_board[x-1][y-1][2]);
 			}
 			if (x%9 == 0 && x>0){ /*end of line*/
-				printf("|\n");
+				printf(" |\n");
 			} else if (x%3 == 0) { /*end of box*/
-				printf("|");
+				printf(" |");
 			}
 			if (x%9 == 0 && y%3 == 0){ /*3 rows separation*/
 				printf("----------------------------------\n");

@@ -76,19 +76,15 @@ void set(int parsed_command[4], int game_board[9][9][2],int show_flag[1]){
 	int x = parsed_command[2]-1;
 	int y = parsed_command[3]-1;
 	int z = parsed_command[4];
-	int debug = 0;
+	int HeizenBugFix = 0;
 	if (legalInput(parsed_command,4)){
 		if (game_board [x][y][1] == 1){ /*is fixed*/
 				printf("Error: cell is fixed\n");
 			}
 		else{
 			legalOptions(game_board,x,y,options);
-//			printf("options: ["); /*from here debug*/ /*heizen bug?!?!?!?!!?<<<<<>>>>>*/
-			for (debug = 0;debug<9;debug++){
-//				printf("%d,",options[debug]);
+			for (HeizenBugFix = 0;HeizenBugFix<9;HeizenBugFix++){
 			}
-//			printf("]\n");
-//			printf("options[z-1]:%d for z:%d\n",options[z-1],z); /*to here debug*/
 			if (options[z-1] == 1 || game_board[x][y][2] == z){
 				game_board[x][y][2] = z;
 				show_flag[0] = 1;
